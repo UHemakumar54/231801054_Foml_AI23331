@@ -1,0 +1,227 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "b3ad0b3d",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(4, 2)\n"
+     ]
+    }
+   ],
+   "source": [
+    "import numpy as np\n",
+    "import pandas as pd\n",
+    "\n",
+    "input_value=np.array([[0,0],[0,1],[1,1],[1,0]])\n",
+    "print(input_value.shape)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "d6377e1d",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(4, 1)\n"
+     ]
+    }
+   ],
+   "source": [
+    "output=np.array([0,0,1,0])\n",
+    "output=output.reshape(4,1)\n",
+    "print(output.shape)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "8aca0c68",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[[0.1]\n",
+      " [0.3]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "weights=np.array([[0.1],[0.3]])\n",
+    "print(weights)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "41e1088b",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[[6.9799176]\n",
+      " [6.9799176]]\n",
+      "[-10.75806031]\n"
+     ]
+    }
+   ],
+   "source": [
+    "bias=0.2\n",
+    "def sigmoid_func(x):\n",
+    "    return 1/(1+np.exp(-x))\n",
+    "def der(x):\n",
+    "    return sigmoid_func(x)*(1-sigmoid_func(x))\n",
+    "for epochs in range(15000):\n",
+    "    input_arr=input_value\n",
+    "    \n",
+    "    weighted_sum=np.dot(input_arr,weights)+bias\n",
+    "    first_output=sigmoid_func(weighted_sum)\n",
+    "    \n",
+    "    error=first_output-output\n",
+    "    total_error=np.square(np.subtract(first_output,output)).mean()\n",
+    "    \n",
+    "    first_der=error\n",
+    "    second_der=der(first_output)\n",
+    "    derivative=first_der*second_der\n",
+    "    \n",
+    "    t_input=input_value.T\n",
+    "    final_derivative=np.dot(t_input,derivative)\n",
+    "    \n",
+    "    weights=weights-(0.05*final_derivative)\n",
+    "    \n",
+    "    for i in derivative:\n",
+    "        bias=bias-(0.05*i)\n",
+    "print(weights)\n",
+    "print(bias)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "f04ee432",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[0.02235399]\n"
+     ]
+    }
+   ],
+   "source": [
+    "pred=np.array([1,0])\n",
+    "result=np.dot(pred,weights)+bias\n",
+    "res=sigmoid_func(result)\n",
+    "print(res)\n",
+    "    \n",
+    "    "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "dca5a010",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[0.96090101]\n"
+     ]
+    }
+   ],
+   "source": [
+    "pred=np.array([1,1])\n",
+    "result=np.dot(pred,weights)+bias\n",
+    "res=sigmoid_func(result)\n",
+    "print(res)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "787c9d89",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[2.12727939e-05]\n"
+     ]
+    }
+   ],
+   "source": [
+    "pred=np.array([0,0])\n",
+    "result=np.dot(pred,weights)+bias\n",
+    "res=sigmoid_func(result)\n",
+    "print(res)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "793ac505",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[0.02235399]\n"
+     ]
+    }
+   ],
+   "source": [
+    "pred=np.array([0,1])\n",
+    "result=np.dot(pred,weights)+bias\n",
+    "res=sigmoid_func(result)\n",
+    "print(res)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "615525ad",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.9"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
